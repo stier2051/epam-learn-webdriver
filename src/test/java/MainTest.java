@@ -4,12 +4,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class MainTest {
     public static void main(String[] args) throws InterruptedException {
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://www.selenium.dev/");
-        Thread.sleep(2000);
-        driver.quit();
-
-        driver = new FirefoxDriver();
+        WebDriver driver = DriverSet.getDriver();
         driver.get("https://www.selenium.dev/");
         Thread.sleep(2000);
         driver.quit();
