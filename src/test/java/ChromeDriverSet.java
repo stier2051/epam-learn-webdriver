@@ -1,10 +1,10 @@
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class DriverSet {
+public class ChromeDriverSet {
     private static WebDriver driver;
 
-    private DriverSet() {
+    private ChromeDriverSet() {
     }
 
     public static WebDriver getDriver() {
