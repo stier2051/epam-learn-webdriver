@@ -1,49 +1,47 @@
 package test;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import page.PastebinHomePage;
+import utility.WaitUtil;
 
-public class PastebinHomePageTest {
+public class PastebinHomePageTest extends BaseTest {
 
-    private WebDriver driver;
     private String code = "git config --global user.name  \"New Sheriff in Town\"" + System.lineSeparator() +
             "git reset $(git commit-tree HEAD^{tree} -m \"Legacy code\")" + System.lineSeparator() +
             "git push origin master --force";
 
     @Test
     public void iCanWin() {
-        PastebinHomePage page = new PastebinHomePage(driver);
-        page.openPage();
-        page.pasteCode("Hello from WebDriver");
-        page.pasteExpiration();
-        page.pasteName("helloweb");
-        page.clickCreateNewPaste();
-        new WebDriverWait(driver, 10);
-        page.closePage();
+        PastebinHomePage page = new PastebinHomePage(driver)
+                .openPage()
+                .pasteCode("Hello from WebDriver")
+                .pasteExpiration()
+                .pasteName("helloweb")
+                .clickCreateNewPaste()
+                .closePage();
     }
 
     @Test
     public void bringItOn() {
-        PastebinHomePage page = new PastebinHomePage(driver);
-        page.openPage();
-        page.pasteCode(code);
-        page.syntaxHighlighting();
-        page.pasteExpiration();
-        page.pasteName("how to gain dominance among developers");
-        page.clickCreateNewPaste();
+        PastebinHomePage page = new PastebinHomePage(driver)
+                .openPage()
+                .pasteCode(code)
+                .syntaxHighlighting()
+                .pasteExpiration()
+                .pasteName("how to gain dominance among developers")
+                .clickCreateNewPaste();
+
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='post-view']")));
 
-//        Assert.assertEquals(driver.getTitle(), "how to gain dominance among developers - Pastebin.com");
-//        Assert.assertEquals(driver.findElement(By.xpath("//span[@class='kw2']")).getCssValue("color"), "#c20cb9");
-//        Assert.assertEquals(code, driver.findElement(By.xpath("//textarea/text()")).getText());
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(driver.getTitle().equals("how to gain dominance among developers - Pastebin.com"));
+        softAssert.assertTrue(page.getTextColor().equals("rgba(194, 12, 185, 1)"));
+        softAssert.assertTrue(page.getValueFromTextareaAfterPost().equals(code));
         page.closePage();
     }
 }

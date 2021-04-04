@@ -1,19 +1,34 @@
 package test;
 
-import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.GoogleCloudPage;
+import utility.ChromeDriverSet;
 
-public class GoogleCloudPageTest {
-    private WebDriver driver;
+import java.util.Arrays;
+import java.util.List;
+
+public class GoogleCloudPageTest extends BaseTest {
+
+    private List<String> dataForCalculate = Arrays.asList(
+            "2,920 total hours per month",
+            "VM class: regular",
+            "Instance type: n1-standard-8",
+            "Region: Frankfurt",
+            "Total available local SSD space 2x375 GiB",
+            "Commitment term: 1 Year",
+            "Estimated Component Cost: USD 1,082.77 per 1 month"
+    );
 
     @Test
-    public void hurtMePlenty() throws InterruptedException {
-        GoogleCloudPage googleCloudPage = new GoogleCloudPage(driver);
-        googleCloudPage.openPage();
-        googleCloudPage.startSearchByKeyWords();
-        googleCloudPage.chooseItemFromSearchResults();
-        Thread.sleep(5000);
-        googleCloudPage.computeEngineClick();
+    public void hurtMePlenty() {
+        GoogleCloudPage googleCloudPage = new GoogleCloudPage(ChromeDriverSet.getDriver());
+        googleCloudPage
+                .openPage()
+                .startSearchByKeyWords()
+                .chooseItemFromSearchResults()
+                .computeEngineClick()
+                .fillCalculatorForm();
+        Assert.assertEquals(googleCloudPage.resultsOfEstimation(), dataForCalculate);
     }
 }

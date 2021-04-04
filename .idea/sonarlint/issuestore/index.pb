@@ -18,3 +18,5 @@ S
 +src/test/java/test/GoogleCloudPageTest.java,7\e\7e383734af61e86cbefdb3162fef5523acbd00ba
 W
 'src/test/java/page/GoogleCloudPage.java,0\1\017ecb29e9de0f95719da4d73295ce20b8355526
+P
+ src/test/java/test/BaseTest.java,d\a\da9a81fb356fd6aa7f2c1179ae3a1103e70ade3a
