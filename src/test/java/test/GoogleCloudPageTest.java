@@ -29,6 +29,27 @@ public class GoogleCloudPageTest extends BaseTest {
                 .chooseItemFromSearchResults()
                 .computeEngineClick()
                 .fillCalculatorForm();
+
         Assert.assertEquals(googleCloudPage.resultsOfEstimation(), dataForCalculate);
+
+        googleCloudPage.closePage();
+    }
+
+    @Test
+    public void hardcore() {
+        GoogleCloudPage googleCloudPage = new GoogleCloudPage(ChromeDriverSet.getDriver());
+        googleCloudPage
+                .openPage()
+                .startSearchByKeyWords()
+                .chooseItemFromSearchResults();
+        driver.switchTo().frame(0);
+        driver.switchTo().frame("myFrame");
+        googleCloudPage
+                .computeEngineClick()
+                .fillCalculatorForm()
+                .emailEstimateButtonClick()
+                .openNewTabForTempEmail();
+
+//        Assert.assertEquals(googleCloudPage.resultsOfEstimation(), dataForCalculate);
     }
 }

@@ -1,8 +1,7 @@
 package page;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -90,6 +89,9 @@ public class GoogleCloudPage {
     @FindBy(xpath = "//md-list-item")
     private List<WebElement> resultItemsList;
 
+    @FindBy(xpath = "//button[contains(text(),'Email Estimate')]")
+    private WebElement emailEstimateButton;
+
     @FindBy(xpath = "//div[@class='gsc-resultsbox-visible']")
     private WebElement resultsOfSearch;
 
@@ -152,8 +154,7 @@ public class GoogleCloudPage {
     }
 
     public GoogleCloudPage computeEngineClick() {
-        driver.switchTo().frame(0);
-        driver.switchTo().frame("myFrame");
+
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.visibilityOf(calculatorForm));
         itemComputeEngine.click();
@@ -203,14 +204,30 @@ public class GoogleCloudPage {
         return this;
     }
 
+    public GoogleCloudPage emailEstimateButtonClick() {
+        new WebDriverWait(driver, 10)
+                .until(ExpectedConditions.visibilityOf(resultBlock));
+        emailEstimateButton.click();
+        return this;
+    }
+
     public List<String> resultsOfEstimation() {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.visibilityOf(resultBlock));
-
         List<String> resultItemListText = new ArrayList<>();
         for(WebElement element : resultItemsList) {
             resultItemListText.add(element.getText());
         }
         return resultItemListText;
+    }
+
+    public GoogleCloudPage closePage() {
+        driver.quit();
+        return this;
+    }
+
+    public void openNewTabForTempEmail() {
+        driver.switchTo().newWindow(WindowType.TAB);
+        driver.get("https://10minutemail.com ");
     }
 }
